@@ -18,6 +18,13 @@ st.set_page_config(
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
 
+# 添加streamlit_analysis目录到系统路径
+streamlit_dir = Path(__file__).parent.parent
+sys.path.append(str(streamlit_dir))
+
+# 导入配置
+from config import capture_output
+
 # 动态导入invite_tree模块
 invite_tree_path = project_root / "01_Script" / "fun" / "invite_tree.py"
 spec = importlib.util.spec_from_file_location("invite_tree", invite_tree_path)

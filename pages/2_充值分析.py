@@ -17,8 +17,12 @@ st.set_page_config(
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
 
+# 添加streamlit_analysis目录到系统路径
+streamlit_dir = Path(__file__).parent.parent
+sys.path.append(str(streamlit_dir))
+
 # 导入配置
-from streamlit_analysis.config import capture_output
+from config import capture_output
 
 # 动态导入accumulate_recharge模块
 recharge_analysis_path = project_root / "01_Script" / "fun" / "accumulate_recharge.py"
