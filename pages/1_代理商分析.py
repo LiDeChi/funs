@@ -13,18 +13,14 @@ st.set_page_config(
 )
 
 # 添加项目根目录到系统路径
-project_root = Path(__file__).parent.parent.parent
+project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
-
-# 添加streamlit_analysis目录到系统路径
-streamlit_dir = Path(__file__).parent.parent
-sys.path.append(str(streamlit_dir))
 
 # 导入配置
 from config import capture_output
 
 # 动态导入agent_analysis模块
-agent_analysis_path = project_root / "01_Script" / "fun" / "agent_analysis.py"
+agent_analysis_path = project_root / "scripts" / "agent_analysis.py"
 spec = importlib.util.spec_from_file_location("agent_analysis", agent_analysis_path)
 agent_analysis = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(agent_analysis)
@@ -32,7 +28,8 @@ spec.loader.exec_module(agent_analysis)
 def load_latest_analysis():
     """加载最新的分析结果"""
     try:
-        output_dir = project_root / "03_Data" / "merged_data"
+        output_dir = project_root / "data" / "merged_data"
+        output_dir.mkdir(parents=True, exist_ok=True)
         files = list(output_dir.glob("agent_analysis_*.csv"))
         if not files:
             return None

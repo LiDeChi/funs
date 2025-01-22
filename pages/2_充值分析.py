@@ -14,18 +14,14 @@ st.set_page_config(
 )
 
 # 添加项目根目录到系统路径
-project_root = Path(__file__).parent.parent.parent
+project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
-
-# 添加streamlit_analysis目录到系统路径
-streamlit_dir = Path(__file__).parent.parent
-sys.path.append(str(streamlit_dir))
 
 # 导入配置
 from config import capture_output
 
 # 动态导入accumulate_recharge模块
-recharge_analysis_path = project_root / "01_Script" / "fun" / "accumulate_recharge.py"
+recharge_analysis_path = project_root / "scripts" / "accumulate_recharge.py"
 spec = importlib.util.spec_from_file_location("accumulate_recharge", recharge_analysis_path)
 accumulate_recharge = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(accumulate_recharge)
@@ -33,7 +29,8 @@ spec.loader.exec_module(accumulate_recharge)
 def load_latest_recharge():
     """加载最新的充值分析结果"""
     try:
-        output_dir = project_root / "03_Data" / "merged_data"
+        output_dir = project_root / "data" / "merged_data"
+        output_dir.mkdir(parents=True, exist_ok=True)
         files = list(output_dir.glob("agent_recharge_analysis_*.csv"))
         if not files:
             return None
